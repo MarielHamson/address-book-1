@@ -112,6 +112,7 @@ function attachContactListeners() {
   });
   $(".buttons").on("click", ".workAddressButton", function(){
     $("#show-work-address").show();
+    displayContactDetails(addressBook);
   });
 };
   
@@ -142,8 +143,8 @@ $(document).ready(function() {
 
     $("input#new-work-address").val("");
     newContact.workAddress = inputtedWorkAddress;
-    console.log(inputtedWorkAddress);
-    displayContactDetails(addressBook);
+    console.log(newContact.workAddress);
+    displayContactDetails(addressBook); //this needs reworking!
     //console.log(inputtedWorkAddress);
   })
 });
