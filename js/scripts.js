@@ -43,12 +43,29 @@ function Contact(firstName, lastName, phoneNumber, emailAddress, address) {
   this.lastName = lastName;
   this.phoneNumber = phoneNumber;
   this.emailAddress = emailAddress;
-  this.address = address;
+  this.address = new Address;
+
 }
 
 // Function to call first and last name
 Contact.prototype.fullName = function() {
   return this.firstName + " " + this.lastName;
+}
+
+// Business logic for physical addresses
+function Address(homeAddress, workAddress, parentAddress) {
+  this.homeAddress = homeAddress;
+  this.workAddress = workAddress;
+  this.parentAddress = parentAddress;
+}
+Address.prototype.workAddress = function(){
+  return this.workAddress;
+}
+Address.prototype.homeAddress = function(){
+  return this.workAddress;
+}
+Address.prototype.parentAddress = function(){
+  return this.workAddress;
 }
 
 // User Interface Logic ---------
@@ -71,19 +88,26 @@ function showContact(contactId) {
   $(".phone-number").html(contact.phoneNumber);
   $(".email-address").html(contact.emailAddress);
   $(".address").html(contact.address);
-  let buttons = $("#buttons");
+  let buttons = $(".buttons");
   buttons.empty();
   buttons.append("<button class='deleteButton' id=" +  + contact.id + ">Delete</button>");
+  buttons.append("<button class='workAddressButton' id=" +  + contact.id + ">Work Address</button>");
 }
 
   function attachContactListeners() {
     $("ul#contacts").on("click", "li", function() {
       showContact(this.id);
     });
-    $("#buttons").on("click", ".deleteButton", function() {
+    $(".buttons").on("click", ".deleteButton", function() {
       addressBook.deleteContact(this.id);
       $("#show-contact").hide();
       displayContactDetails(addressBook);
+    });
+    $(".buttons").on("click", ".workAddressButton", function(){
+      addressBook.addWorkAddress(this.id);
+      $("#show-contact").append();
+      displayContactDetails(addressBook);
+      console.log("test");
     });
   };
   
